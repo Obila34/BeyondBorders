@@ -920,7 +920,7 @@
             display: flex; flex-direction: column; height: 18px; overflow: hidden;
             transition: transform 0.3s cubic-bezier(0.77,0,0.175,1);
         }
-        .pkg-btn:hover .pkg-btn-texts { transform: translateY(-100%); }
+        .pkg-btn:hover .pkg-btn-texts { transform: translateY(-50%); }
         .pkg-btn-texts span { line-height: 18px; white-space: nowrap; }
 
         /* ─── REVIEWS ─── */
@@ -1167,6 +1167,202 @@
             .footer-top { grid-template-columns: 1fr; gap: 48px; }
             .footer-nav { grid-template-columns: repeat(2, 1fr); }
             .pkg-inner, .rev-inner, .faq-inner, .footer-inner { padding: 0 24px; }
+        }
+        /* ═══════════════════════════════════════
+   TABLET — max 1024px
+═══════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .pkg-grid { grid-template-columns: repeat(2, 1fr); }
+            .rev-grid { grid-template-columns: repeat(2, 1fr); }
+            .rev-info-card { grid-row: span 1; grid-column: span 2; flex-direction: row; align-items: center; gap: 32px; }
+            .rev-info-card .rev-score { font-size: 60px; }
+            .footer-nav { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ═══════════════════════════════════════
+           MOBILE — max 900px (nav break)
+        ═══════════════════════════════════════ */
+        @media (max-width: 900px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .nav-cta { display: none; }
+            .hamburger { display: flex; }
+
+            .hero-bottom { padding: 0 20px 0; flex-direction: column; align-items: center; gap: 0; }
+            .dest-card-wrap { display: none; }
+            .review-badge { min-width: unset; width: 100%; max-width: 300px; margin-bottom: 0; }
+            .scroll-hint { display: none; }
+        }
+
+        /* ═══════════════════════════════════════
+           MOBILE — max 768px (full layout break)
+        ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            /* Hero */
+            .hero { height: 100svh; min-height: 620px; }
+            .hero-bg {
+                background:
+                        linear-gradient(to bottom, rgba(10,21,32,0.55) 0%, rgba(10,21,32,0.2) 35%, rgba(10,21,32,0.82) 100%),
+                        url('Assets/Hero.jpg') center 30% / cover no-repeat;
+            }
+            .hero-body { padding: 90px 20px 20px; justify-content: flex-end; padding-bottom: 180px; }
+            .hero-eyebrow { margin-bottom: 18px; }
+            .hero-title { font-size: clamp(46px, 12vw, 72px); margin-bottom: 18px; }
+            .hero-subtitle { font-size: 14px; max-width: 100%; margin-bottom: 28px; }
+            .hero-actions { gap: 12px; }
+            .btn-primary { font-size: 13px; padding: 12px 22px 12px 18px; }
+            .btn-primary-arrow { width: 28px; height: 28px; }
+            .btn-ghost { font-size: 13px; }
+
+            .hero-bottom {
+                padding: 0 20px 24px;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .review-badge { max-width: 100%; width: auto; padding: 14px 18px; }
+            .review-score { font-size: 18px; }
+
+            /* Ticker */
+            .ticker-item { font-size: 10px; padding: 0 22px; gap: 12px; }
+
+            /* Activities */
+            .activities-section { padding: 64px 0 56px; }
+            .act-heading { font-size: clamp(26px, 6.5vw, 40px); padding: 0 20px; margin-bottom: 32px; line-height: 1.15; }
+            .act-tabs { gap: 6px; margin-bottom: 36px; padding: 0 16px; }
+            .act-tab { padding: 8px 16px; font-size: 12.5px; }
+            .act-img-wrap { width: 170px; height: 240px; border-radius: 16px; }
+            .act-img-wrap:nth-child(3n+2) { height: 210px; margin-top: 18px; }
+            .act-img-wrap:nth-child(3n+3) { height: 270px; }
+            .act-img-label { font-size: 11px; bottom: 10px; left: 12px; right: 12px; }
+            .act-track { gap: 10px; }
+
+            /* Booking */
+            .booking-section { padding: 64px 0 56px; }
+            .booking-inner { padding: 0 20px; }
+            .booking-slider-wrap { margin: 0 -20px; padding: 0 20px; }
+            .booking-card { min-width: calc(100vw - 56px); padding: 28px 24px 24px; gap: 20px; border-radius: 18px; }
+            .booking-num { font-size: 38px; }
+            .booking-title { font-size: 17px; }
+            .booking-desc { font-size: 13px; max-width: 100%; }
+            .booking-card-img { height: 220px; border-radius: 12px; }
+            .booking-controls { margin-top: 24px; gap: 16px; }
+            .booking-arrow { width: 36px; height: 36px; }
+
+            /* Packages */
+            .pkg-section { padding: 64px 0 56px; }
+            .pkg-inner { padding: 0 20px; }
+            .pkg-grid { grid-template-columns: 1fr; gap: 18px; }
+            .pkg-card-img { height: 260px; }
+            .pkg-name { font-size: 16px; }
+            .pkg-desc { font-size: 13px; }
+
+            /* Reviews */
+            .rev-section-wrap { padding: 20px 16px; }
+            .rev-section { padding: 44px 20px; border-radius: 22px; }
+            .rev-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .rev-info-card { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px 20px; }
+            .rev-info-card .rev-score { font-size: 56px; }
+            .rev-info-card .rev-info-text { font-size: 12px; }
+            .rev-info-card .rev-platform-name { font-size: 15px; }
+            .rev-info-card .rev-leave-btn { width: 100%; text-align: center; padding: 12px 18px; font-size: 13px; }
+            .rev-card { padding: 18px 16px; gap: 10px; border-radius: 14px; }
+            .rev-stars { font-size: 13px; letter-spacing: 2px; }
+            .rev-quote { font-size: 12px; line-height: 1.6; }
+            .rev-name { font-size: 11px; }
+
+            /* FAQ */
+            .faq-section { padding: 64px 0 56px; }
+            .faq-inner { padding: 0 20px; }
+            .faq-question { padding: 18px 20px; font-size: 14px; }
+            .faq-answer { padding: 0 20px; }
+            .faq-item.open .faq-answer { padding: 0 20px 18px; }
+            .faq-icon { width: 28px; height: 28px; }
+
+            /* Footer */
+            .footer { padding: 48px 0 0; }
+            .footer-inner { padding: 0 20px; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; padding-bottom: 36px; }
+            .footer-nav { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; padding: 20px 0; }
+            .footer-copy { font-size: 12px; }
+        }
+
+        /* ═══════════════════════════════════════
+           SMALL MOBILE — max 430px
+        ═══════════════════════════════════════ */
+        @media (max-width: 430px) {
+            .hero-title { font-size: 42px; }
+            .hero-body { padding-bottom: 160px; }
+            .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 280px; }
+            .btn-primary { justify-content: center; }
+            .btn-ghost { text-align: center; border-bottom: none; border: 1px solid rgba(255,255,255,0.3); border-radius: 100px; padding: 12px 22px; }
+
+            .review-badge { flex-direction: row; align-items: center; gap: 16px; padding: 12px 16px; flex-wrap: wrap; }
+            .review-badge-top { flex-shrink: 0; }
+            .review-stars svg { width: 11px; height: 11px; }
+
+            .act-tab { padding: 7px 14px; font-size: 12px; }
+
+            .booking-card { min-width: calc(100vw - 44px); padding: 24px 20px 20px; }
+            .booking-card-img { height: 200px; }
+
+            .rev-section { padding: 40px 16px; border-radius: 18px; }
+            .rev-card { padding: 20px 16px; }
+
+            .faq-question { padding: 16px 18px; font-size: 13.5px; gap: 10px; }
+            .faq-answer { padding: 0 18px; }
+            .faq-item.open .faq-answer { padding: 0 18px 16px; }
+
+            .footer-nav { grid-template-columns: 1fr; }
+            .pkg-card-img { height: 230px; }
+            /* Inside your existing @media (max-width: 430px) block, replace/add Reviews */
+
+            .rev-section-wrap { padding: 16px 12px; }
+            .rev-section { padding: 36px 14px; border-radius: 16px; }
+            .rev-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .rev-info-card { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 14px; padding: 18px 16px; }
+            .rev-info-card .rev-score { font-size: 48px; }
+            .rev-info-card .rev-leave-btn { width: 100%; text-align: center; padding: 11px 16px; font-size: 12.5px; }
+            .rev-card { padding: 14px 12px; gap: 8px; border-radius: 12px; }
+            .rev-stars { font-size: 11px; letter-spacing: 1px; }
+            .rev-quote { font-size: 11px; line-height: 1.55; }
+            .rev-name { font-size: 10.5px; }
+            .rev-avatars img, .rev-avatar-count { width: 28px; height: 28px; }
+        }
+
+        /* ═══════════════════════════════════════
+           VERY SMALL — max 360px
+        ═══════════════════════════════════════ */
+        @media (max-width: 360px) {
+            .hero-title { font-size: 38px; }
+            nav { padding: 12px 16px; }
+            .nav-logo { font-size: 18px; }
+        }
+        @keyframes popupFadeIn {
+            from { opacity: 0; pointer-events: none; }
+            to   { opacity: 1; pointer-events: all; }
+        }
+        @keyframes popupSlideUp {
+            from { transform: translateY(24px); }
+            to   { transform: translateY(0); }
+        }
+
+        /* Mobile popup adjustments */
+        @media (max-width: 768px) {
+            #tripPopupOverlay { align-items: flex-end; padding: 0; }
+            #tripPopup {
+                border-radius: 24px 24px 0 0;
+                max-width: 100%;
+            }
+            #tripPopup > div:nth-child(2) { height: 190px; }
+            #tripPopup > div:nth-child(2) p { font-size: 22px; }
+        }
+
+        @media (max-width: 430px) {
+            #tripPopup > div:last-child { padding: 20px 18px 32px; }
+            #tripPopup > div:last-child > div:last-child { flex-direction: column; }
+            #tripPopup > div:last-child > div:last-child a,
+            #tripPopup > div:last-child > div:last-child button { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -1779,12 +1975,15 @@
                         </svg>
                         Instagram
                     </a>
+
+                    <!-- TikTok -->
                     <a href="#" class="footer-social">
-                        <svg viewBox="0 0 16 17" fill="none" width="16" height="16">
-                            <path d="M13.63 14.32h-2.37V10.6c0-.89-.02-2.03-1.24-2.03-1.23 0-1.42.97-1.42 1.96v3.78H6.23V6.69h2.28v1.04h.03c.46-.79 1.33-1.26 2.25-1.22 2.4 0 2.84 1.58 2.84 3.64v4.17zM3.56 5.64a1.38 1.38 0 110-2.75 1.38 1.38 0 010 2.75zm1.18 8.68H2.37V6.69h2.37v7.63zM14.81.69H1.18C.54.68.01 1.2 0 1.84v13.69c.01.64.54 1.16 1.18 1.15h13.63c.65.01 1.18-.51 1.19-1.15V1.84C15.99 1.2 15.46.68 14.81.69z" fill="currentColor"/>
+                        <svg viewBox="0 0 16 17" fill="none" width="15" height="15">
+                            <path d="M11.5 1h-2v9.5a2 2 0 1 1-2-2v-2a4 4 0 1 0 4 4V5.5a6.5 6.5 0 0 0 3 .8V4.3a4.5 4.5 0 0 1-3-3.3z" fill="currentColor"/>
                         </svg>
-                        LinkedIn
+                        TikTok
                     </a>
+
                 </div>
             </div>
 
@@ -1807,19 +2006,13 @@
                     <a href="#" class="footer-link">Blog Single</a>
                     <a href="#" class="footer-link">Blog</a>
                 </div>
-                <div class="footer-nav-col">
-                    <h6 class="footer-nav-title">Utility Pages</h6>
-                    <a href="#" class="footer-link">Style Guide</a>
-                    <a href="#" class="footer-link">Changelog</a>
-                    <a href="#" class="footer-link">Licenses</a>
-                </div>
             </div>
 
         </div>
 
         <div class="footer-bottom">
             <p class="footer-copy">© Rights reserved by Beyond Borders</p>
-            <p class="footer-copy">Designed &amp; developed with care</p>
+            <a href="https://sam-obila-allela.vercel.app/"><p class="footer-social">Designed &amp; developed by Allela</p></a>
         </div>
     </div>
 </footer>
@@ -2000,6 +2193,205 @@
             lastScrollY = currentScrollY;
         }, { passive: true });
     })();
+
+    /* Touch swipe for booking slider */
+    let touchStartX = 0;
+    bookingTrack.parentElement.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    bookingTrack.parentElement.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) bookingSlide(diff > 0 ? 1 : -1);
+    }, { passive: true });
+
+    function closePopup() {
+        const overlay = document.getElementById('tripPopupOverlay');
+        overlay.style.transition = 'opacity 0.3s ease';
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => overlay.style.display = 'none', 300);
+    }
+
+    /* Close on overlay click (outside the card) */
+    document.getElementById('tripPopupOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closePopup();
+    });
+
+    /* Close on Escape key */
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePopup();
+    });
 </script>
+
+<!-- ─── ZANZIBAR POPUP ─── -->
+<div id="tripPopupOverlay" style="
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,21,32,0.7);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; animation: popupFadeIn 0.5s 1.5s forwards ease;
+">
+    <div id="tripPopup" style="
+        background: #0D1B2A;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 28px;
+        overflow: hidden;
+        width: 100%;
+        max-width: 480px;
+        position: relative;
+        transform: translateY(24px);
+        animation: popupSlideUp 0.5s 1.5s forwards cubic-bezier(0.16,1,0.3,1);
+    ">
+        <!-- Close button -->
+        <button onclick="closePopup()" style="
+            position: absolute; top: 16px; right: 16px; z-index: 10;
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.8);
+            transition: background 0.2s ease, color 0.2s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.color='#fff'"
+                onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.8)'">
+            <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+        </button>
+
+        <!-- Image -->
+        <div style="position: relative; height: 220px; overflow: hidden;">
+            <img src="Assets/Zanzibar.jpg" alt="Zanzibar" style="
+                width: 100%; height: 100%; object-fit: cover; display: block;
+            "/>
+            <div style="
+                position: absolute; inset: 0;
+                background: linear-gradient(to bottom, rgba(10,21,32,0.15) 0%, rgba(10,21,32,0.75) 100%);
+            "></div>
+            <!-- Floating badge -->
+            <div style="
+                position: absolute; top: 18px; left: 18px;
+                background: #C8A96E; color: #0D1B2A;
+                font-size: 11px; font-weight: 600;
+                letter-spacing: 0.1em; text-transform: uppercase;
+                padding: 6px 14px; border-radius: 100px;
+            ">Upcoming Group Trip</div>
+            <!-- Bottom image text -->
+            <div style="position: absolute; bottom: 18px; left: 22px; right: 60px;">
+                <p style="
+                    font-family: 'Cormorant Garamond', serif;
+                    font-size: 26px; font-weight: 400;
+                    color: #fff; line-height: 1.1; margin: 0;
+                ">Zanzibar, Tanzania</p>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div style="padding: 24px 24px 28px;">
+
+            <!-- Trip meta row -->
+            <div style="
+                display: flex; gap: 8px; flex-wrap: wrap;
+                margin-bottom: 20px;
+            ">
+                <div style="
+                    display: flex; align-items: center; gap: 7px;
+                    background: rgba(255,255,255,0.07);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 100px; padding: 7px 14px;
+                ">
+                    <svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                        <rect x="1" y="2" width="14" height="13" rx="2" stroke="#C8A96E" stroke-width="1.3"/>
+                        <path d="M1 6h14" stroke="#C8A96E" stroke-width="1.3"/>
+                        <path d="M5 1v2M11 1v2" stroke="#C8A96E" stroke-width="1.3" stroke-linecap="round"/>
+                    </svg>
+                    <span style="font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 500;">November</span>
+                </div>
+                <div style="
+                    display: flex; align-items: center; gap: 7px;
+                    background: rgba(255,255,255,0.07);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 100px; padding: 7px 14px;
+                ">
+                    <svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                        <circle cx="8" cy="7" r="3" stroke="#C8A96E" stroke-width="1.3"/>
+                        <path d="M8 1v1M8 13v1M1 7h1M13 7h1" stroke="#C8A96E" stroke-width="1.3" stroke-linecap="round"/>
+                        <path d="M3.5 3.5l.7.7M11.1 11.1l.7.7M11.8 3.5l-.7.7M4.2 11.1l-.7.7" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                    <span style="font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 500;">7 Nights</span>
+                </div>
+                <div style="
+                    display: flex; align-items: center; gap: 7px;
+                    background: rgba(255,255,255,0.07);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 100px; padding: 7px 14px;
+                ">
+                    <svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                        <circle cx="6" cy="5" r="2.5" stroke="#C8A96E" stroke-width="1.3"/>
+                        <path d="M1 14c0-3 2-4.5 5-4.5s5 1.5 5 4.5" stroke="#C8A96E" stroke-width="1.3" stroke-linecap="round"/>
+                        <path d="M12 7c1.5 0 3 1 3 3.5" stroke="#C8A96E" stroke-width="1.3" stroke-linecap="round"/>
+                        <circle cx="12.5" cy="4.5" r="2" stroke="#C8A96E" stroke-width="1.3"/>
+                    </svg>
+                    <span style="font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 500;">Booking Currently Open</span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <p style="
+                font-size: 13.5px; color: rgba(255,255,255,0.6);
+                line-height: 1.7; margin: 0 0 22px;
+            ">
+                Blue water, fresh seafood, and sunsets that will genuinely make you emotional.
+                Join our next group escape to the island of Zanzibar — all logistics handled,
+                all you need to do is show up.
+            </p>
+
+            <!-- Spots progress -->
+            <div style="margin-bottom: 22px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 11.5px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500;">Spots Filled</span>
+                    <span style="font-size: 11.5px; color: #C8A96E; font-weight: 600;">Spots Reservation Currently Ongoing</span>
+                </div>
+                <div style="height: 4px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 40%; background: #C8A96E; border-radius: 4px;"></div>
+                </div>
+            </div>
+
+            <!-- CTA buttons -->
+            <div style="display: flex; gap: 10px;">
+                <a href="#" style="
+                    flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px;
+                    background: #C8A96E; color: #0D1B2A;
+                    border-radius: 100px; padding: 13px 20px;
+                    font-size: 13.5px; font-weight: 600;
+                    text-decoration: none; letter-spacing: 0.02em;
+                    transition: background 0.25s ease;
+                " onmouseover="this.style.background='#E2C98A'"
+                   onmouseout="this.style.background='#C8A96E'">
+                    Reserve My Spot
+                    <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
+                        <path d="M13.5 1H4V2H12.293L1 13.293l.707.707L13 2.707V11h1V2.5A1.5 1.5 0 0013.5 1z" fill="#0D1B2A"/>
+                    </svg>
+                </a>
+                <button onclick="closePopup()" style="
+                    padding: 13px 20px;
+                    background: rgba(255,255,255,0.07);
+                    border: 1px solid rgba(255,255,255,0.12);
+                    border-radius: 100px;
+                    color: rgba(255,255,255,0.7);
+                    font-size: 13.5px; font-weight: 400;
+                    cursor: pointer;
+                    transition: background 0.2s ease, color 0.2s ease;
+                    font-family: 'DM Sans', sans-serif;
+                " onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.color='#fff'"
+                        onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.7)'">
+                    Maybe Later
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
