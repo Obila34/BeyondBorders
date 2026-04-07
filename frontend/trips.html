@@ -30,16 +30,31 @@
 
         <nav class="nav-dock" aria-label="Primary" data-liquid-nav>
             <div class="nav-blob" aria-hidden="true"></div>
-            <div class="nav-links">
-                <a class="nav-link" href="index.html">Home</a>
-                <a class="nav-link is-active" href="trips.html" aria-current="page">Trips</a>
-                <a class="nav-link" href="gallery.html">Gallery</a>
-                <a class="nav-link" href="contact.html">Contact</a>
+            <div class="nav-dock-row">
+                <div class="nav-links">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link is-active" href="trips.html" aria-current="page">Trips</a>
+                    <a class="nav-link" href="gallery.html">Gallery</a>
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </div>
+
+                <button class="theme-toggle theme-toggle-dock" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+                    <span class="sr-only" data-theme-label>Switch to dark mode</span>
+                    <span class="theme-icon-shell" aria-hidden="true">
+                        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="4.2"></circle>
+                            <path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke-linecap="round"></path>
+                        </svg>
+                        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.8 8.8 0 1 0 11.2 11.2Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                </button>
             </div>
         </nav>
 
         <div class="site-tools">
-            <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+            <button class="theme-toggle theme-toggle-desktop" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
                 <span class="sr-only" data-theme-label>Switch to dark mode</span>
                 <span class="theme-icon-shell" aria-hidden="true">
                     <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
@@ -51,52 +66,6 @@
                     </svg>
                 </span>
             </button>
-
-            <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
-                <span class="menu-toggle-box" aria-hidden="true">
-                    <span class="menu-toggle-line"></span>
-                    <span class="menu-toggle-line"></span>
-                    <span class="menu-toggle-line"></span>
-                </span>
-            </button>
-        </div>
-    </div>
-
-    <div class="mobile-menu" id="mobile-menu" hidden>
-        <div class="mobile-menu-inner">
-            <div class="mobile-menu-panel">
-                <div class="mobile-menu-top">
-                    <a class="brand" href="index.html">BEYOND BORDERS</a>
-                    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
-                        <span class="sr-only" data-theme-label>Switch to dark mode</span>
-                        <span class="theme-icon-shell" aria-hidden="true">
-                            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                                <circle cx="12" cy="12" r="4.2"></circle>
-                                <path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke-linecap="round"></path>
-                            </svg>
-                            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                                <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.8 8.8 0 1 0 11.2 11.2Z" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-
-                <nav class="mobile-nav-links" aria-label="Mobile">
-                    <a class="mobile-nav-link" href="index.html">Home</a>
-                    <a class="mobile-nav-link is-active" href="trips.html" aria-current="page">Trips</a>
-                    <a class="mobile-nav-link" href="gallery.html">Gallery</a>
-                    <a class="mobile-nav-link" href="contact.html">Contact</a>
-                </nav>
-
-                <p class="mobile-menu-note">
-                    Upcoming departures across Kenya and beyond, shaped around community, exploration, and the rhythm of the open road.
-                </p>
-
-                <div class="cta-actions">
-                    <a class="button primary" href="#featured-zanzibar">Zanzibar Event</a>
-                    <button class="button secondary" type="button" data-menu-close>Close Menu</button>
-                </div>
-            </div>
         </div>
     </div>
 </header>

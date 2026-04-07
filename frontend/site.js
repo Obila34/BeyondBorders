@@ -284,77 +284,6 @@
         };
     }
 
-    function setupMobileMenu() {
-        const menu = document.querySelector(".mobile-menu");
-        const menuToggle = document.querySelector("[data-menu-toggle]");
-        const closeButton = document.querySelector("[data-menu-close]");
-        const navLinks = menu ? Array.from(menu.querySelectorAll("a")) : [];
-
-        if (!menu || !menuToggle) {
-            return;
-        }
-
-        function setMenuState(open) {
-            menuToggle.setAttribute("aria-expanded", String(open));
-
-            if (open) {
-                menu.hidden = false;
-                window.requestAnimationFrame(function () {
-                    document.body.classList.add("menu-open");
-                });
-                return;
-            }
-
-            document.body.classList.remove("menu-open");
-
-            if (reduceMotion) {
-                menu.hidden = true;
-                return;
-            }
-
-            window.setTimeout(function () {
-                if (!document.body.classList.contains("menu-open")) {
-                    menu.hidden = true;
-                }
-            }, 240);
-        }
-
-        menuToggle.addEventListener("click", function () {
-            const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-            setMenuState(!expanded);
-        });
-
-        if (closeButton) {
-            closeButton.addEventListener("click", function () {
-                setMenuState(false);
-            });
-        }
-
-        navLinks.forEach(function (link) {
-            link.addEventListener("click", function () {
-                setMenuState(false);
-            });
-        });
-
-        menu.addEventListener("click", function (event) {
-            if (event.target === menu) {
-                setMenuState(false);
-            }
-        });
-
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                setMenuState(false);
-            }
-        });
-
-        window.addEventListener("resize", function () {
-            if (window.innerWidth >= 980) {
-                setMenuState(false);
-            }
-        });
-    }
-
     function setupLiquidNav(root) {
         const blob = root.querySelector(".nav-blob");
         const links = Array.from(root.querySelectorAll(".nav-link"));
@@ -365,12 +294,13 @@
 
         const current = { x: 0, y: 0, width: 0, height: 0, opacity: 0, scaleX: 1, scaleY: 1, tilt: 0 };
         const target = { x: 0, y: 0, width: 0, height: 0, opacity: 0, scaleX: 1, scaleY: 1, tilt: 0 };
-        let activeLink = links.find(function (link) {
+        let restingLink = links.find(function (link) {
             return link.getAttribute("aria-current") === "page";
         }) || null;
         let pointerX = 0;
         let pointerY = 0;
         let pointerTime = performance.now();
+        let pulseTimeout = 0;
 
         function apply(state) {
             blob.style.setProperty("--blob-x", state.x.toFixed(2) + "px");
@@ -383,11 +313,19 @@
             blob.style.setProperty("--blob-tilt", state.tilt.toFixed(3) + "deg");
         }
 
-        function setTarget(link) {
+        function setTarget(link, persist) {
+            if (!link) {
+                target.opacity = 0;
+                return;
+            }
+
             const rootRect = root.getBoundingClientRect();
             const linkRect = link.getBoundingClientRect();
 
-            activeLink = link;
+            if (persist) {
+                restingLink = link;
+            }
+
             target.x = linkRect.left - rootRect.left;
             target.y = linkRect.top - rootRect.top;
             target.width = linkRect.width;
@@ -400,13 +338,54 @@
             apply(current);
         }
 
-        links.forEach(function (link) {
-            link.addEventListener("pointerenter", function () {
-                setTarget(link);
+        function resetMotion() {
+            target.scaleX = 1;
+            target.scaleY = 1;
+            target.tilt = 0;
+        }
+
+        function settle() {
+            if (restingLink) {
+                setTarget(restingLink);
+            } else {
+                target.opacity = 0;
+            }
+
+            resetMotion();
+
+            if (reduceMotion) {
+                snap();
+            }
+        }
+
+        function pulse() {
+            window.clearTimeout(pulseTimeout);
+            target.scaleX = hasCoarsePointer ? 1.12 : 1.08;
+            target.scaleY = hasCoarsePointer ? 1.12 : 1.08;
+            target.tilt = 0;
+
+            if (reduceMotion) {
+                snap();
+            }
+
+            pulseTimeout = window.setTimeout(function () {
+                resetMotion();
+
                 if (reduceMotion) {
                     snap();
                 }
-            });
+            }, reduceMotion ? 0 : 180);
+        }
+
+        links.forEach(function (link) {
+            if (!hasCoarsePointer) {
+                link.addEventListener("pointerenter", function () {
+                    setTarget(link);
+                    if (reduceMotion) {
+                        snap();
+                    }
+                });
+            }
 
             link.addEventListener("focus", function () {
                 setTarget(link);
@@ -414,86 +393,77 @@
                     snap();
                 }
             });
-        });
 
-        root.addEventListener("pointermove", function (event) {
-            const now = performance.now();
-            const deltaTime = Math.max(now - pointerTime, 16);
-            const velocityX = (event.clientX - pointerX) / deltaTime;
-            const velocityY = (event.clientY - pointerY) / deltaTime;
-
-            target.scaleX = 1 + clamp(Math.abs(velocityX) * 0.36, 0, 0.28);
-            target.scaleY = 1 + clamp(Math.abs(velocityY) * 0.28, 0, 0.16);
-            target.tilt = clamp(velocityX * 9, -7, 7);
-
-            pointerX = event.clientX;
-            pointerY = event.clientY;
-            pointerTime = now;
-
-            if (reduceMotion) {
-                snap();
-            }
-        });
-
-        root.addEventListener("pointerleave", function () {
-            if (activeLink) {
-                setTarget(activeLink);
-            } else {
-                target.opacity = 0;
-            }
-
-            target.scaleX = 1;
-            target.scaleY = 1;
-            target.tilt = 0;
-
-            if (reduceMotion) {
-                snap();
-            }
-        });
-
-        root.addEventListener("focusout", function (event) {
-            if (!root.contains(event.relatedTarget)) {
-                if (activeLink) {
-                    setTarget(activeLink);
-                } else {
-                    target.opacity = 0;
+            link.addEventListener("pointerdown", function (event) {
+                if (event.pointerType === "mouse" && !hasCoarsePointer) {
+                    return;
                 }
 
-                target.scaleX = 1;
-                target.scaleY = 1;
-                target.tilt = 0;
+                setTarget(link, true);
+                pulse();
+            });
+
+            link.addEventListener("click", function (event) {
+                if (event.detail === 0) {
+                    setTarget(link, true);
+                    pulse();
+                }
+            });
+        });
+
+        if (!hasCoarsePointer) {
+            root.addEventListener("pointermove", function (event) {
+                const now = performance.now();
+                const deltaTime = Math.max(now - pointerTime, 16);
+                const velocityX = (event.clientX - pointerX) / deltaTime;
+                const velocityY = (event.clientY - pointerY) / deltaTime;
+
+                target.scaleX = 1 + clamp(Math.abs(velocityX) * 0.36, 0, 0.28);
+                target.scaleY = 1 + clamp(Math.abs(velocityY) * 0.28, 0, 0.16);
+                target.tilt = clamp(velocityX * 9, -7, 7);
+
+                pointerX = event.clientX;
+                pointerY = event.clientY;
+                pointerTime = now;
 
                 if (reduceMotion) {
                     snap();
                 }
+            });
+
+            root.addEventListener("pointerleave", settle);
+        }
+
+        root.addEventListener("focusout", function (event) {
+            if (!root.contains(event.relatedTarget)) {
+                settle();
             }
         });
 
-        if (activeLink) {
-            setTarget(activeLink);
-        }
+        settle();
 
         if (reduceMotion) {
             snap();
             return {
                 sync: function () {
-                    if (activeLink) {
-                        setTarget(activeLink);
-                        snap();
-                    }
+                    settle();
+                    snap();
                 }
             };
         }
 
         function animate() {
-            current.x += (target.x - current.x) * 0.18;
-            current.y += (target.y - current.y) * 0.18;
-            current.width += (target.width - current.width) * 0.18;
-            current.height += (target.height - current.height) * 0.18;
+            const positionLerp = hasCoarsePointer ? 0.24 : 0.18;
+            const shapeLerp = hasCoarsePointer ? 0.18 : 0.14;
+
+            current.x += (target.x - current.x) * positionLerp;
+            current.y += (target.y - current.y) * positionLerp;
+            current.width += (target.width - current.width) * positionLerp;
+            current.height += (target.height - current.height) * positionLerp;
             current.opacity += (target.opacity - current.opacity) * 0.16;
-            current.scaleX += (target.scaleX - current.scaleX) * 0.14;
-            current.scaleY += (target.scaleY - current.scaleY) * 0.14;
-            current.tilt += (target.tilt - current.tilt) * 0.14;
+            current.scaleX += (target.scaleX - current.scaleX) * shapeLerp;
+            current.scaleY += (target.scaleY - current.scaleY) * shapeLerp;
+            current.tilt += (target.tilt - current.tilt) * shapeLerp;
 
             target.scaleX += (1 - target.scaleX) * 0.08;
             target.scaleY += (1 - target.scaleY) * 0.08;
@@ -507,9 +477,7 @@
 
         return {
             sync: function () {
-                if (activeLink) {
-                    setTarget(activeLink);
-                }
+                settle();
             }
         };
     }
@@ -680,7 +648,7 @@
 
         if (!reduceMotion && !hasCoarsePointer) {
             window.addEventListener("wheel", function (event) {
-                if (document.body.classList.contains("modal-open") || document.body.classList.contains("menu-open")) {
+                if (document.body.classList.contains("modal-open")) {
                     return;
                 }
 
@@ -699,7 +667,7 @@
             document.addEventListener("keydown", function (event) {
                 let delta = 0;
 
-                if (document.body.classList.contains("modal-open") || document.body.classList.contains("menu-open") || shouldBypassKeyboard()) {
+                if (document.body.classList.contains("modal-open") || shouldBypassKeyboard()) {
                     return;
                 }
 
@@ -1149,7 +1117,6 @@
         const featuredModal = setupFeaturedModal();
 
         setupThemeControls();
-        setupMobileMenu();
         setupPageLoadSequence(featuredModal);
         setupReveals();
         setupFooterMeshActivation();
