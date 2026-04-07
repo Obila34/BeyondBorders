@@ -3,456 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond Borders – Travel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --white: #ffffff;
-            --dark: #111111;
-            --pill-bg: rgba(255,255,255,0.12);
-            --pill-border: rgba(255,255,255,0.25);
-        }
-
-        body {
-            font-family: 'Sora', sans-serif;
-            background: #1a1209;
-            color: var(--white);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── HERO ── */
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 700px;
-            overflow: hidden;
-        }
-
-        /* Warm travel background using CSS gradient layers to mimic the earthy photo tone */
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background:
-                /* top-left dark vignette */
-                    radial-gradient(ellipse 55% 80% at 20% 50%, rgba(10,7,2,0.55) 0%, transparent 70%),
-                        /* atmospheric haze overlay */
-                    linear-gradient(105deg, rgba(8,5,1,0.7) 0%, rgba(30,18,5,0.3) 45%, rgba(60,40,10,0.1) 100%),
-                        /* base warm earthy image simulation */
-                    radial-gradient(ellipse 120% 100% at 60% 40%,
-                    #c8883a 0%,
-                    #9e6420 15%,
-                    #7a4a10 30%,
-                    #5a3308 45%,
-                    #3a2005 60%,
-                    #1e1003 80%,
-                    #0d0701 100%
-                    );
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Motion blur bokeh circles to simulate depth-of-field */
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                    radial-gradient(circle 180px at 75% 30%, rgba(200,140,60,0.18) 0%, transparent 70%),
-                    radial-gradient(circle 120px at 85% 65%, rgba(180,110,30,0.14) 0%, transparent 70%),
-                    radial-gradient(circle 250px at 65% 50%, rgba(160,100,20,0.10) 0%, transparent 70%);
-        }
-
-        /* Horizontal motion-blur streaks */
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 3px,
-                    rgba(180,120,40,0.025) 3px,
-                    rgba(180,120,40,0.025) 4px
-            );
-            pointer-events: none;
-        }
-
-        /* Silhouette traveler figure (CSS art) */
-        .traveler {
-            position: absolute;
-            right: 8%;
-            bottom: 0;
-            width: 420px;
-            height: 580px;
-            pointer-events: none;
-        }
-
-        /* Body shape */
-        .traveler::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 480px;
-            background: linear-gradient(180deg,
-            rgba(220,180,90,0.92) 0%,
-            rgba(190,140,60,0.88) 30%,
-            rgba(150,100,30,0.85) 60%,
-            rgba(100,65,15,0.9) 100%
-            );
-            clip-path: polygon(
-                    35% 0%, 65% 0%,         /* head top */
-                    70% 8%, 80% 15%,        /* right shoulder */
-                    85% 30%, 90% 50%,       /* right arm extending */
-                    95% 45%, 100% 40%,      /* handlebar reach */
-                    95% 55%, 85% 60%,       /* torso right */
-                    75% 100%, 25% 100%,     /* legs/bike bottom */
-                    15% 60%, 5% 55%,        /* left side */
-                    10% 40%, 15% 30%,       /* left arm */
-                    20% 15%, 30% 8%         /* left shoulder */
-            );
-            filter: blur(0.5px);
-        }
-
-        /* Helmet */
-        .traveler::after {
-            content: '';
-            position: absolute;
-            top: 2%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 55px;
-            background: radial-gradient(ellipse at 40% 35%,
-            rgba(230,200,130,0.95),
-            rgba(180,140,70,0.9) 60%,
-            rgba(140,100,40,0.85)
-            );
-            border-radius: 50% 50% 30% 30%;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
-        }
-
-        /* Bike wheel */
-        .wheel {
-            position: absolute;
-            border-radius: 50%;
-            border: 6px solid rgba(220,170,80,0.75);
-            box-shadow: 0 0 20px rgba(200,140,50,0.3), inset 0 0 15px rgba(0,0,0,0.4);
-        }
-        .wheel-front {
-            width: 200px; height: 200px;
-            bottom: 0; right: 0;
-        }
-        .wheel-rear {
-            width: 195px; height: 195px;
-            bottom: 0; left: 15px;
-        }
-        .wheel::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            width: 12px; height: 12px;
-            background: rgba(220,170,80,0.9);
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(200,140,50,0.5);
-        }
-        /* Spokes */
-        .wheel::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            width: 100%; height: 1px;
-            background: rgba(220,170,80,0.4);
-            box-shadow:
-                    0 0 0 0 transparent,
-                    45px -45px 0 -0.5px rgba(220,170,80,0.3),
-                    -45px 45px 0 -0.5px rgba(220,170,80,0.3),
-                    0 80px 0 -0.5px rgba(220,170,80,0.3),
-                    0 -80px 0 -0.5px rgba(220,170,80,0.3);
-        }
-
-        /* Glow behind traveler */
-        .traveler-glow {
-            position: absolute;
-            right: 5%;
-            bottom: -5%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(ellipse, rgba(200,140,50,0.18) 0%, transparent 70%);
-            pointer-events: none;
-            filter: blur(30px);
-            animation: pulse-glow 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.08); }
-        }
-
-        /* ── NAV ── */
-        nav {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            padding: 22px 48px;
-            gap: 40px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--white);
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 24px;
-            background: rgba(255,255,255,0.35);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: rgba(255,255,255,0.88);
-            text-decoration: none;
-            font-size: 0.92rem;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover { color: #fff; }
-
-        .nav-cta {
-            margin-left: auto;
-            padding: 10px 22px;
-            background: rgba(255,255,255,0.92);
-            color: var(--dark);
-            border-radius: 999px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: 0.01em;
-            transition: background 0.2s, transform 0.15s;
-            white-space: nowrap;
-        }
-
-        .nav-cta:hover { background: #fff; transform: translateY(-1px); }
-
-        /* ── HERO CONTENT ── */
-        .hero-content {
-            position: absolute;
-            bottom: 0; left: 0;
-            z-index: 5;
-            padding: 0 48px 80px;
-            max-width: 680px;
-            animation: fade-up 0.9s ease both;
-        }
-
-        @keyframes fade-up {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.82rem;
-            font-weight: 400;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            animation: fade-up 0.9s 0.1s ease both;
-        }
-
-        .eyebrow-line {
-            width: 38px;
-            height: 1px;
-            background: rgba(255,255,255,0.6);
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 5.5vw, 5.2rem);
-            font-weight: 800;
-            line-height: 1.02;
-            letter-spacing: -0.03em;
-            color: var(--white);
-            margin-bottom: 22px;
-            animation: fade-up 0.9s 0.2s ease both;
-        }
-
-        .hero-subtitle {
-            font-size: 0.97rem;
-            font-weight: 300;
-            line-height: 1.65;
-            color: rgba(255,255,255,0.78);
-            max-width: 460px;
-            margin-bottom: 36px;
-            animation: fade-up 0.9s 0.3s ease both;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            background: var(--white);
-            color: var(--dark);
-            border-radius: 999px;
-            padding: 14px 26px 14px 30px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: 0.01em;
-            transition: transform 0.2s, box-shadow 0.2s;
-            animation: fade-up 0.9s 0.4s ease both;
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(0,0,0,0.35);
-        }
-
-        .cta-arrow {
-            width: 34px;
-            height: 34px;
-            background: var(--dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .cta-arrow svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--white);
-        }
-
-        /* ── SOCIAL PROOF ── */
-        .social-proof {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            animation: fade-up 0.9s 0.5s ease both;
-        }
-
-        .stars {
-            display: flex;
-            gap: 3px;
-            color: #f5c842;
-            font-size: 1.1rem;
-        }
-
-        .proof-text {
-            font-size: 0.82rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.72);
-            letter-spacing: 0.02em;
-        }
-    </style>
+    <meta name="description" content="Experience the best of Kenya and East Africa with Beyond Borders. Curated group road trips, safaris, and cross-border expeditions starting from Nairobi.">
+    <title>Beyond Borders | Premier Kenyan Group Road Trips &amp; Adventures.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        (function () {
+            try {
+                var stored = window.localStorage.getItem("bb-theme");
+                var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            } catch (error) {
+                document.documentElement.setAttribute("data-theme", "light");
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="site.css">
 </head>
-<body>
+<body data-page="home">
+<a class="skip-link" href="#main-content">Skip to content</a>
 
-<section class="hero">
-    <!-- Background -->
-    <div class="hero-bg"></div>
+<div class="featured-modal" data-featured-modal hidden>
+    <div class="featured-modal-card" role="dialog" aria-modal="true" aria-labelledby="featured-trip-title" aria-describedby="featured-trip-copy">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close featured Zanzibar trip modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path>
+            </svg>
+        </button>
 
-    <!-- Traveler glow -->
-    <div class="traveler-glow"></div>
+        <figure class="featured-modal-visual">
+            <img src="Assets/Beyond%20Borders%20Zanzibar.jpeg" alt="Zanzibar trip flyer artwork showing tropical water and the featured October event details" decoding="async" fetchpriority="high">
+            <figcaption class="featured-modal-copy">
+                <strong>Zanzibar: The Island Escape.</strong>
+                <span>20th - 25th October</span>
+            </figcaption>
+        </figure>
 
-    <!-- CSS traveler silhouette with bike -->
-    <div class="traveler">
-        <div class="wheel wheel-front"></div>
-        <div class="wheel wheel-rear"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="logo">
-      <span class="logo-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-        </svg>
-      </span>
-            Beyond Borders
-        </a>
-        <div class="nav-divider"></div>
-        <ul class="nav-links">
-            <li><a href="#">Destinations</a></li>
-            <li><a href="#">Reviews</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <a href="#" class="nav-cta">Plan your trip</a>
-    </nav>
-
-    <!-- Hero Copy -->
-    <div class="hero-content">
-        <div class="eyebrow">
-            <span class="eyebrow-line"></span>
-            <span>Curated travel experiences</span>
-        </div>
-
-        <h1 class="hero-title">Explore Beyond<br>Your Borders</h1>
-
-        <p class="hero-subtitle">
-            Discover the world's most breathtaking destinations with personalized travel plans guided by expert explorers committed to your adventure.
-        </p>
-
-        <a href="#" class="hero-cta">
-            Start exploring
-            <span class="cta-arrow">
-        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </span>
-        </a>
-
-        <div class="social-proof">
-            <div class="stars">★★★★★</div>
-            <span class="proof-text">500+ Happy Travellers Worldwide</span>
+        <div class="featured-modal-body">
+            <p class="featured-modal-meta">Starting from KES 69,999/=</p>
+            <h2 class="featured-modal-title" id="featured-trip-title">5 Days. 4 Nights. From the streets of Stone Town to the turquoise waters of Mnemba.</h2>
+            <p class="featured-modal-text" id="featured-trip-copy">
+                Join our next cross-border expedition.
+            </p>
+            <div class="featured-modal-actions">
+                <a class="button primary glow-button" href="trips.html#featured-zanzibar"><span>View Full Itinerary</span></a>
+                <button class="button secondary" type="button" data-modal-close>Maybe Later</button>
+            </div>
         </div>
     </div>
-</section>
+</div>
 
+<header class="site-header">
+    <div class="shell masthead">
+        <a class="brand" href="index.html">BEYOND BORDERS</a>
+
+        <nav class="nav-dock" aria-label="Primary" data-liquid-nav>
+            <div class="nav-blob" aria-hidden="true"></div>
+            <div class="nav-links">
+                <a class="nav-link is-active" href="index.html" aria-current="page">Home</a>
+                <a class="nav-link" href="trips.html">Trips</a>
+                <a class="nav-link" href="gallery.html">Gallery</a>
+                <a class="nav-link" href="contact.html">Contact</a>
+            </div>
+        </nav>
+
+        <div class="site-tools">
+            <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+                <span class="sr-only" data-theme-label>Switch to dark mode</span>
+                <span class="theme-icon-shell" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                        <circle cx="12" cy="12" r="4.2"></circle>
+                        <path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke-linecap="round"></path>
+                    </svg>
+                    <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                        <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.8 8.8 0 1 0 11.2 11.2Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </span>
+            </button>
+
+            <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
+                <span class="menu-toggle-box" aria-hidden="true">
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
+                    <span class="menu-toggle-line"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+        <div class="mobile-menu-inner">
+            <div class="mobile-menu-panel">
+                <div class="mobile-menu-top">
+                    <a class="brand" href="index.html">BEYOND BORDERS</a>
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+                        <span class="sr-only" data-theme-label>Switch to dark mode</span>
+                        <span class="theme-icon-shell" aria-hidden="true">
+                            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <circle cx="12" cy="12" r="4.2"></circle>
+                                <path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke-linecap="round"></path>
+                            </svg>
+                            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.8 8.8 0 1 0 11.2 11.2Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+
+                <nav class="mobile-nav-links" aria-label="Mobile">
+                    <a class="mobile-nav-link is-active" href="index.html" aria-current="page">Home</a>
+                    <a class="mobile-nav-link" href="trips.html">Trips</a>
+                    <a class="mobile-nav-link" href="gallery.html">Gallery</a>
+                    <a class="mobile-nav-link" href="contact.html">Contact</a>
+                </nav>
+
+                <p class="mobile-menu-note">
+                    Curated group adventures across Kenya and beyond, built around community, exploration, and the spirit of the open road.
+                </p>
+
+                <div class="cta-actions">
+                    <a class="button primary" href="trips.html">Explore Upcoming Trips</a>
+                    <button class="button secondary" type="button" data-menu-close>Close Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="main-content">
+    <section class="hero-home section">
+        <div class="shell">
+            <div class="hero-copy">
+                <p class="eyebrow" data-reveal="up">Curated Group Adventures</p>
+                <h1 class="hero-title" data-reveal="up" style="--delay: 0.06s;">The Road Less Traveled. Together.</h1>
+                <p class="hero-lead" data-reveal="up" style="--delay: 0.12s;">
+                    Curated group adventures across Kenya and beyond. Discover the spirit of the open road with a community that seeks the extraordinary.
+                </p>
+                <div class="button-row" data-reveal="up" style="--delay: 0.18s;">
+                    <a class="button primary" href="trips.html">Explore Upcoming Trips</a>
+                    <a class="button secondary" href="about.html">Our Story</a>
+                </div>
+            </div>
+
+            <div class="hero-media" aria-label="Kenya travel highlights">
+                <div class="media-stack">
+                    <figure class="media-frame wide fold-card fold-left" data-reveal="left">
+                        <img src="Assets/Diani.jpg" alt="Aerial coastline in Kenya with white sand and layered turquoise water" decoding="async">
+                        <figcaption class="figure-copy">
+                            <strong>Large-format coastal calm.</strong>
+                            <span>High-end imagery framed with precise borders and slow easing.</span>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="media-frame square fold-card fold-left secondary-fold" data-reveal="left" style="--delay: 0.08s;">
+                        <img src="Assets/Lamu.jpg" alt="Historic Lamu architecture lit by soft daylight" decoding="async">
+                        <figcaption class="figure-copy">
+                            <strong>Architectural detail.</strong>
+                            <span>Editorial texture beneath the main reveal.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <figure class="media-frame tall fold-card fold-right" data-reveal="right" style="--delay: 0.14s;">
+                    <img src="Assets/FortJesus.jpg" alt="Fort Jesus in Mombasa used as a heritage-focused premium travel visual" decoding="async">
+                    <figcaption class="figure-copy">
+                        <strong>One anchor asset from the right.</strong>
+                        <span>A quieter counterweight to the left-hand image stack.</span>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="shell section-grid">
+            <div class="section-copy-block" data-reveal="up">
+                <p class="eyebrow">Beyond Borders</p>
+                <h2 class="section-title">Beyond the Map.</h2>
+                <p class="section-copy">
+                    At Beyond Borders, we believe the journey is as vital as the destination. We specialize in overland road trips that turn travelers into a community. From the rugged terrains of Northern Kenya to the coastal breezes of Zanzibar, we handle the logistics so you can focus on the experience.
+                </p>
+            </div>
+
+            <div class="card-grid cols-3">
+                <article class="glass-card" data-reveal="up" style="--delay: 0.04s;">
+                    <p class="card-kicker">Road Trips</p>
+                    <h3 class="card-title">Overland Expeditions</h3>
+                    <p class="card-copy">Curated departures across Kenya for travelers who want the road, the landscape, and the people beside them to matter equally.</p>
+                    <ul class="pill-row" aria-label="Overland Expeditions highlights">
+                        <li>Nairobi Start</li>
+                        <li>Shared Route</li>
+                        <li>Curated Pace</li>
+                    </ul>
+                </article>
+
+                <article class="glass-card" data-reveal="up" style="--delay: 0.1s;">
+                    <p class="card-kicker">Featured Escape</p>
+                    <h3 class="card-title">Zanzibar: The Island Escape.</h3>
+                    <p class="card-copy">5 Days. 4 Nights. From Stone Town to Mnemba, this October departure turns a coastal getaway into a cross-border shared adventure.</p>
+                    <ul class="pill-row" aria-label="Zanzibar: The Island Escape. highlights">
+                        <li>20-25 Oct</li>
+                        <li>KES 69,999/=</li>
+                        <li>Limited Spots</li>
+                    </ul>
+                </article>
+
+                <article class="glass-card" data-reveal="up" style="--delay: 0.16s;">
+                    <p class="card-kicker">Community</p>
+                    <h3 class="card-title">The Community Circle</h3>
+                    <p class="card-copy">Beyond Borders trips are designed to turn strangers into a travel circle through open-road moments, shared discovery, and premium hosting.</p>
+                    <ul class="pill-row" aria-label="The Community Circle highlights">
+                        <li>Small Groups</li>
+                        <li>Open Road</li>
+                        <li>High-End</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="shell editorial-grid">
+            <article class="story-panel" data-reveal="left">
+                <p class="eyebrow">Why Beyond Borders</p>
+                <h2 class="section-title">Community-led travel with the logistics already handled.</h2>
+                <p class="section-copy">
+                    We plan the road, the route, and the rhythm so travelers can focus on the experience itself rather than the complexity underneath it.
+                </p>
+                <p class="section-copy">
+                    From Northern Kenya drives to coastal departures and cross-border escapes, every itinerary starts in Nairobi and unfolds with clarity, comfort, and a stronger sense of togetherness.
+                </p>
+            </article>
+
+            <aside class="stats-panel" data-reveal="right" style="--delay: 0.08s;">
+                <p class="eyebrow">What Defines Us</p>
+                <div class="stats-stack">
+                    <div class="stat-line">
+                        <span class="stat-value">Nairobi</span>
+                        <span class="stat-copy">Kenyan-rooted planning with departures shaped around the open road.</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-value">Community</span>
+                        <span class="stat-copy">Shared travel experiences designed to bring people together from the first departure.</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-value">Beyond</span>
+                        <span class="stat-copy">Curated routes that extend from Kenya to the wider East African coastline and borderlands.</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="shell">
+            <div class="section-copy-block" data-reveal="up">
+                <p class="eyebrow">Service Layers</p>
+                <h2 class="section-title">Professional line icons. Premium group logistics.</h2>
+                <p class="section-copy">
+                    Every icon, card, and caption is tuned to support the travel narrative without making the interface feel promotional or loud.
+                </p>
+            </div>
+
+            <div class="icon-grid cols-4">
+                <article class="glass-card icon-card" data-reveal="up" style="--delay: 0.04s;">
+                    <span class="icon-shell" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M3 18h18M5 18l5-8l4 5l3-4l3 7" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <h3>Open-Road Routes</h3>
+                    <p>Northern Kenya drives and cross-country departures planned around scenery, pacing, and the people in the vehicle.</p>
+                </article>
+
+                <article class="glass-card icon-card" data-reveal="up" style="--delay: 0.1s;">
+                    <span class="icon-shell" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M7 17c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5M9 9.5a3 3 0 1 0 0-6a3 3 0 0 0 0 6Zm6 1a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5Zm2.5 6.5c0-1.4-1-2.5-2.5-2.9" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <h3>Shared Community</h3>
+                    <p>Every departure is built to turn a group of travelers into a circle with stories, rituals, and easy connection.</p>
+                </article>
+
+                <article class="glass-card icon-card" data-reveal="up" style="--delay: 0.16s;">
+                    <span class="icon-shell" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M12 20s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Zm0-7.2a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <h3>Coastal Escapes</h3>
+                    <p>From Diani to Zanzibar, the shoreline becomes part of the overland journey rather than an afterthought.</p>
+                </article>
+
+                <article class="glass-card icon-card" data-reveal="up" style="--delay: 0.22s;">
+                    <span class="icon-shell" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M12 3v6l4 2M4 12a8 8 0 1 0 16 0a8 8 0 0 0-16 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <h3>Curated Logistics</h3>
+                    <p>We handle the timing, route flow, and coordination so the adventure still feels effortless at every stop.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="shell">
+        <div class="footer-card">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="brand" href="index.html">BEYOND BORDERS</a>
+                    <p class="footer-copy">Based in Nairobi, Kenya, Beyond Borders curates group road trips across Kenya and beyond for travelers drawn to community, exploration, and high-end adventure.</p>
+                </div>
+
+                <div class="footer-section">
+                    <p class="footer-label">Quick Links</p>
+                    <nav class="footer-links" aria-label="Footer quick links">
+                        <a href="index.html">Home</a>
+                        <a href="trips.html">Trips</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+
+                <div class="footer-section">
+                    <p class="footer-label">Contact Info</p>
+                    <div class="footer-contact">
+                        <span>Based in Nairobi, Kenya.</span>
+                        <a href="tel:+254707411095">+254 707 411 095</a>
+                        <a href="mailto:hello@beyondborders.travel">hello@beyondborders.travel</a>
+                    </div>
+                </div>
+
+                <div class="footer-controls">
+                    <p class="footer-label">Mode</p>
+                    <button class="footer-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+                        <span class="sr-only" data-theme-label>Switch to dark mode</span>
+                        <span class="theme-icon-shell" aria-hidden="true">
+                            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <circle cx="12" cy="12" r="4.2"></circle>
+                                <path d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6" stroke-linecap="round"></path>
+                            </svg>
+                            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.8 8.8 0 1 0 11.2 11.2Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div class="social-links" aria-label="Social links">
+                        <a class="social-link" href="https://www.instagram.com/" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                                <circle cx="12" cy="12" r="3.5"></circle>
+                                <path d="M17.5 6.5h.01" stroke-linecap="round"></path>
+                            </svg>
+                        </a>
+                        <a class="social-link" href="https://x.com/" aria-label="X">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"></path>
+                            </svg>
+                        </a>
+                        <a class="social-link" href="https://www.linkedin.com/" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                                <path d="M7 9v8M7 6.2v.1M11 17v-5a2.5 2.5 0 0 1 5 0v5M4 17h14" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="site.js"></script>
 </body>
 </html>
